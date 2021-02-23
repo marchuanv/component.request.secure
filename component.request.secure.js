@@ -38,11 +38,11 @@ module.exports = {
                 throw new Error(message);
             }
             session.Id = results.headers.sessionid;
-            session.encryptionKey.remote = results.headers.encryptionkey;
+            session.encryptionKey.remote = utils.base64ToString(results.headers.encryptionkey);
             session.token = results.headers.token;
             return await module.exports.send({ host, port, path, method, username, passphrase, data, fromhost, fromport });
         }
-        data = utils.encryptToBase64Str(data, utils.base64ToString(session.encryptionKey.remote));
+        data = utils.encryptToBase64Str(data, session.encryptionKey.remote);
         const results = await requestDeferred.send({  host, port, path, method, headers: {
             "Content-Type":"text/plain",
             encryptionkey: session.encryptionKey.local,
