@@ -43,11 +43,15 @@ module.exports = {
             return await module.exports.send({ host, port, path, method, username, passphrase, data, fromhost, fromport });
         }
         data = utils.encryptToBase64Str(data, utils.base64ToString(session.encryptionKey.remote));
-        return await requestDeferred.send({  host, port, path, method, headers: {
+        const results = await requestDeferred.send({  host, port, path, method, headers: {
             "Content-Type":"text/plain",
             encryptionkey: session.encryptionKey.local,
             sessionid: session.Id,
             token: session.token
         }, data });
+        if (results.statusCode === 200){
+            results.data = utils.decryptFromBase64Str(results.data,session.privateKey);
+        }
+        return results;
     }
 };
