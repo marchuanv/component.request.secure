@@ -31,7 +31,7 @@ module.exports = {
                 fromport,
                 username,
                 passphrase
-            }, data });
+            }, data: "" });
             if (results.statusCode !== 200){
                 const message = `failed to get a session from ${host}:${port}`;
                 logging.write("Sending Secure Request",message);
