@@ -50,7 +50,7 @@ module.exports = {
             token: session.token
         }, data });
         if (results.statusCode === 200){
-            results.data = utils.decryptFromBase64Str(results.data,session.privateKey);
+            results.data = utils.decryptFromBase64Str(results.data, session.privateKey, session.hashedPassphrase);
         }
         return results;
     }
