@@ -37,7 +37,7 @@ module.exports = {
                 logging.write("Sending Secure Request",message);
                 throw new Error(message);
             }
-            session.sessionId = results.headers.sessionid;
+            session.Id = results.headers.sessionid;
             session.encryptionKey.remote = results.headers.encryptionkey;
             session.token = results.headers.token;
             return await module.exports.send({ host, port, path, method, username, passphrase, data, fromhost, fromport });
